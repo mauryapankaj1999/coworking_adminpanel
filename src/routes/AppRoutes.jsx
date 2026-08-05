@@ -10,6 +10,8 @@ import AddsubCategory from "../pages/admin/AddSubCategory/AddSubCategory";
 import SubCategory from "../pages/admin/AddSubCategory/SubCategory";
 import AddWorkspace from "../pages/admin/Workspace/Add";
 import Workspace from "../pages/admin/Workspace/Workspace";
+import AddBlog from "../pages/admin/Blog/Add";
+import Blogs from "../pages/admin/Blog/Blogs";
 
 const AppRoutes = () => {
   return (
@@ -37,6 +39,8 @@ const AppRoutes = () => {
         <Route path="/workspace" element={<Workspace />} />
         {/* <Route path="/workspace/add" element={<AddWorkspace />} /> */}
         <Route path="/workspace/edit/:id" element={<AddWorkspace />} />
+        <Route path="/blog/add" element={<AddBlog />} />
+        <Route path="/blog" element={<Blogs />} />
        
         
 

@@ -5,8 +5,11 @@ import { useSubCategories } from "../../../hooks/useSubCategory";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
 
 export default function SubCategory() {
+  
   const navigate = useNavigate();
+
   const { data: categories, isLoading } = useSubCategories();
+  
   console.log(categories, "asdfasdf");
 
   const columns = [

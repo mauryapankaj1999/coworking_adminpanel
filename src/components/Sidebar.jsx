@@ -30,7 +30,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       name:"Workspace",
       path:"/workspace",
       icon: <IoBookOutline size={20} />,
-
+    },
+    {
+      name:"Blog",
+      path:"/blog",
+      icon: <IoBookOutline size={20} />,
     }
   ];
 
