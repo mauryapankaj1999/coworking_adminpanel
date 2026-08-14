@@ -12,6 +12,12 @@ import AddWorkspace from "../pages/admin/Workspace/Add";
 import Workspace from "../pages/admin/Workspace/Workspace";
 import AddBlog from "../pages/admin/Blog/Add";
 import Blogs from "../pages/admin/Blog/Blogs";
+import AddTestimonial from "../pages/admin/testimonials/Add";
+import Testimonials from "../pages/admin/testimonials/testimonials";
+import AddWorkspaceCategory from "../pages/admin/WorkspaceCategory/Add";
+import WorkspaceCategory from "../pages/admin/WorkspaceCategory/WorkspaceCategory";
+import AddOperator from "../pages/admin/Operator/Add";
+import Operator from "../pages/admin/Operator/Operator";
 
 const AppRoutes = () => {
   return (
@@ -40,7 +46,19 @@ const AppRoutes = () => {
         {/* <Route path="/workspace/add" element={<AddWorkspace />} /> */}
         <Route path="/workspace/edit/:id" element={<AddWorkspace />} />
         <Route path="/blog/add" element={<AddBlog />} />
+        <Route path="/blog/edit/:id" element={<AddBlog />} />
         <Route path="/blog" element={<Blogs />} />
+        <Route path="/testimonials/add" element={<AddTestimonial />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        {/* <Route path="/testimonials/add" element={<AddTestimonial />} /> */}
+        <Route path="/testimonials/edit/:id" element={<AddTestimonial />} />
+        <Route path="/add-workspacecategory" element={<AddWorkspaceCategory />} />
+        <Route path="/workspacecategory" element={<WorkspaceCategory />} />
+        <Route path="/workspacecategory/edit/:id" element={<AddWorkspaceCategory />} />
+        <Route path="/operator/add" element={<AddOperator />} />
+        <Route path="/operator/edit/:id" element={<AddOperator />} />
+        <Route path="/operator" element={<Operator />} />
+
        
         
 

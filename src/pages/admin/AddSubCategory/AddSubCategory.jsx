@@ -112,14 +112,14 @@ export default function AddSubCategory() {
 
           <div>
             <label className="block mb-2 text-sm font-medium">
-              Category
+              City
             </label>
 
             <select
               {...register("category")}
               className="w-full border rounded-md h-11 px-3"
             >
-              <option value="">Select Category</option>
+              <option value="">Select City</option>
 
               {categories?.data?.map((item) => (
                 <option key={item._id} value={item._id}>
@@ -130,7 +130,7 @@ export default function AddSubCategory() {
 
             {errors.category && (
               <p className="text-red-500 text-sm mt-1">
-                Category is required
+                City is required
               </p>
             )}
           </div>
@@ -138,9 +138,9 @@ export default function AddSubCategory() {
           {/* Name */}
 
           <Input
-            label="Sub Category Name"
+            label="Sub Location Name"
             name="name"
-            placeholder="Enter Sub Category Name"
+            placeholder="Enter Sub Location Name"
             register={register}
             error={errors.name}
           />

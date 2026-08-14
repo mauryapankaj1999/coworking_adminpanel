@@ -639,7 +639,9 @@ export default function AddWorkspace() {
   const [images, setImages] = useState([]); // new files
   const [previews, setPreviews] = useState([]); // preview urls (new + existing)
   const [amenityInput, setAmenityInput] = useState("");
-  const [communityInput, setCommunityInput] = useState("");
+  // const [communityInput, setCommunityInput] = useState("");
+  // const [amenityInput, setAmenityInput] = useState("");
+const [connectivityInput, setConnectivityInput] = useState("");
 
   const { data: workspaceData } = useSingleWorkspace(id);
   const { data: categoriesData } = useCategories();
@@ -663,16 +665,16 @@ export default function AddWorkspace() {
       name: "",
       category: "",
       subCategory: "",
-      shortDescription: "",
+      // shortDescription: "",
       description: "",
       address: "",
       city: "",
       state: "",
       pincode: "",
-      latitude: "",
-      longitude: "",
+     mapLink: "",
       amenities: [],
-      community: [],
+      // community: [],
+       connectivity: [],
       officeTiming: [{ label: "", value: "" }],
       plans: [{ title: "", price: "", description: "" }],
       featured: false,
@@ -698,7 +700,8 @@ export default function AddWorkspace() {
 
   const selectedCategory = watch("category");
   const amenities = watch("amenities");
-  const community = watch("community");
+  // const community = watch("community");
+  const connectivity = watch("connectivity");
 
   const { data: subCategoriesData } =
     useSubCategoriesByCategory(selectedCategory);
@@ -711,16 +714,16 @@ export default function AddWorkspace() {
       setValue("name", w.name);
       setValue("category", w.category?._id || w.category);
       setValue("subCategory", w.subCategory?._id || w.subCategory);
-      setValue("shortDescription", w.shortDescription);
+      // setValue("shortDescription", w.shortDescription);
       setValue("description", w.description);
       setValue("address", w.address);
       setValue("city", w.city);
       setValue("state", w.state);
       setValue("pincode", w.pincode);
-      setValue("latitude", w.latitude);
-      setValue("longitude", w.longitude);
+      setValue("mapLink", w.mapLink);
       setValue("amenities", w.amenities || []);
-      setValue("community", w.community || []);
+      // setValue("community", w.community || []);
+      setValue("connectivity", w.connectivity || []);
       setValue("featured", w.featured);
       setValue("status", w.status);
 
@@ -736,7 +739,7 @@ export default function AddWorkspace() {
         setPreviews(w.images.map((img) => img.url));
       }
     }
-  }, [id, workspaceData, setValue]);
+ }, [id, workspaceData?.data?._id]); 
 
   // Image handling
   const handleImageChange = (e) => {
@@ -770,18 +773,18 @@ export default function AddWorkspace() {
   };
 
   // Community tags
-  const addCommunity = () => {
-    if (!communityInput.trim()) return;
-    setValue("community", [...(community || []), communityInput.trim()]);
-    setCommunityInput("");
-  };
+ const addConnectivity = () => {
+  if (!connectivityInput.trim()) return;
+  setValue("connectivity", [...(connectivity || []), connectivityInput.trim()]);
+  setConnectivityInput("");
+};
 
-  const removeCommunity = (index) => {
-    setValue(
-      "community",
-      community.filter((_, i) => i !== index),
-    );
-  };
+const removeConnectivity = (index) => {
+  setValue(
+    "connectivity",
+    connectivity.filter((_, i) => i !== index),
+  );
+};
 
   const onSubmit = async (data) => {
     try {
@@ -795,20 +798,20 @@ export default function AddWorkspace() {
       formData.append("name", data.name);
       formData.append("category", data.category);
       formData.append("subCategory", data.subCategory);
-      formData.append("shortDescription", data.shortDescription);
+      // formData.append("shortDescription", data.shortDescription);
       formData.append("description", data.description);
       formData.append("address", data.address);
       formData.append("city", data.city);
       formData.append("state", data.state);
       formData.append("pincode", data.pincode || "");
-      formData.append("latitude", data.latitude || "");
-      formData.append("longitude", data.longitude || "");
+   formData.append("mapLink", data.mapLink || "");
       formData.append("featured", data.featured);
       formData.append("status", data.status);
 
       formData.append("plans", JSON.stringify(data.plans));
       formData.append("amenities", JSON.stringify(data.amenities || []));
-      formData.append("community", JSON.stringify(data.community || []));
+      // formData.append("community", JSON.stringify(data.community || []));
+      formData.append("connectivity", JSON.stringify(data.connectivity || []));
       formData.append("officeTiming", JSON.stringify(data.officeTiming));
 
       images.forEach((file) => {
@@ -854,12 +857,12 @@ export default function AddWorkspace() {
             />
 
             <div>
-              <label className="block text-sm font-medium mb-1">Category</label>
+              <label className="block text-sm font-medium mb-1">City</label>
               <select
-                {...register("category", { required: "Category is required" })}
+                {...register("category", { required: "City is required" })}
                 className="w-full border rounded-md px-3 py-2 text-sm"
               >
-                <option value="">Select Category</option>
+                <option value="">Select City</option>
                 {categoriesData?.data?.map((cat) => (
                   <option key={cat._id} value={cat._id}>
                     {cat.name}
@@ -875,16 +878,16 @@ export default function AddWorkspace() {
 
             <div>
               <label className="block text-sm font-medium mb-1">
-                Sub Category
+                Sub Location
               </label>
               <select
                 {...register("subCategory", {
-                  required: "Sub Category is required",
+                  required: "Sub Location is required",
                 })}
                 disabled={!selectedCategory}
                 className="w-full border rounded-md px-3 py-2 text-sm disabled:bg-gray-100"
               >
-                <option value="">Select Sub Category</option>
+                <option value="">Select Sub Location</option>
                 {subCategoriesData?.data?.map((sub) => (
                   <option key={sub._id} value={sub._id}>
                     {sub.name}
@@ -934,13 +937,13 @@ export default function AddWorkspace() {
           </div>
 
           {/* Descriptions */}
-          <Input
+          {/* <Input
             label="Short Description"
             name="shortDescription"
             placeholder="Enter Short Description"
             register={register}
             error={errors.shortDescription}
-          />
+          /> */}
 
           <div>
             <label className="block text-sm font-medium mb-1">
@@ -990,24 +993,57 @@ export default function AddWorkspace() {
               placeholder="Enter Pincode"
               register={register}
             />
-            <Input
-              label="Latitude"
-              name="latitude"
-              placeholder="Enter Latitude"
-              register={register}
-            />
-            <Input
-              label="Longitude"
-              name="longitude"
-              placeholder="Enter Longitude"
+             <Input
+              label="Google Maps Link"
+              name="mapLink"
+              placeholder="Paste Google Maps share link"
               register={register}
             />
           </div>
+          {/* Connectivity */}
+<div>
+  <label className="block text-sm font-medium mb-1">Connectivity</label>
+  <div className="flex gap-2">
+    <input
+      value={connectivityInput}
+      onChange={(e) => setConnectivityInput(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addConnectivity();
+        }
+      }}
+      placeholder="e.g. Metro, E-Rickshaw"
+      className="flex-1 border rounded-md px-3 py-2 text-sm"
+    />
+    <button
+      type="button"
+      onClick={addConnectivity}
+      className="bg-[#184981] text-white px-4 rounded-md text-sm"
+    >
+      Add
+    </button>
+  </div>
+  <div className="flex flex-wrap gap-2 mt-2">
+    {connectivity?.map((item, index) => (
+      <span
+        key={index}
+        className="flex items-center gap-1 bg-gray-100 text-sm px-3 py-1 rounded-full"
+      >
+        {item}
+        <IoClose
+          className="cursor-pointer"
+          onClick={() => removeConnectivity(index)}
+        />
+      </span>
+    ))}
+  </div>
+</div>
 
           {/* Plans */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium">Plans</label>
+              <label className="block text-sm font-medium">Seat Details</label>
               <button
                 type="button"
                 onClick={() =>
@@ -1095,7 +1131,7 @@ export default function AddWorkspace() {
           </div>
 
           {/* Community */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1">Community</label>
             <div className="flex gap-2">
               <input
@@ -1132,7 +1168,7 @@ export default function AddWorkspace() {
                 </span>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Office Timing */}
           <div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -7,22 +7,19 @@ import Input from "../../../components/common/Input";
 
 import {
   useCreateCategory,
-  useSingleCategory,
+  useCategory,
   useUpdateCategory,
-} from "../../../hooks/useCategory";
+} from "../../../hooks/useWorkspaceCategory";
 
 import { showError, showSuccess } from "../../../utils/toast";
 
-export default function AddCategory() {
+export default function AddWorkspaceCategory() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [preview, setPreview] = useState("");
+  const { data: categoryData } = useCategory(id);
 
-  const { data: categoryData } = useSingleCategory(id);
-
-  const { mutateAsync: createCategory, isPending } =
-    useCreateCategory();
+  const { mutateAsync: createCategory, isPending } = useCreateCategory();
 
   const { mutateAsync: updateCategory, isPending: updateLoading } =
     useUpdateCategory();
@@ -40,45 +37,24 @@ export default function AddCategory() {
   useEffect(() => {
     if (id && categoryData?.data) {
       setValue("name", categoryData.data.name);
-
-      if (categoryData.data.image?.url) {
-        setPreview(categoryData.data.image.url);
-      }
+      setValue("description", categoryData.data.description);
     }
   }, [id, categoryData, setValue]);
 
   const onSubmit = async (data) => {
     try {
-      const formData = new FormData();
-
-      formData.append("name", data.name);
-
-      if (data.image?.[0]) {
-        formData.append("image", data.image[0]);
-      }
+      const payload = { name: data.name, description: data.description };
 
       if (id) {
-        await updateCategory({
-          id,
-          data: formData,
-        });
-
+        await updateCategory({ id, data: payload });
         showSuccess("Category Updated Successfully");
       } else {
-        if (!data.image?.[0]) {
-          showError("Category Image is required");
-          return;
-        }
-
-        await createCategory(formData);
-
+        await createCategory(payload);
         showSuccess("Category Created Successfully");
       }
 
       reset();
-      setPreview("");
-
-      navigate("/category");
+      navigate("/workspacecategory");
     } catch (error) {
       console.log(error);
 
@@ -91,47 +67,28 @@ export default function AddCategory() {
   return (
     <>
       <HeadingSection
-        title={id ? "Edit Category" : "Add Location"}
-        link="/category"
+        title={id ? "Edit Workspace Category" : "Add Workspace Category"}
+        link="/workspace-category"
         btnText="View Categories"
       />
 
       <div className="bg-white rounded-xl p-6 shadow">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-5"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Input
-            label="City Name"
+            label="Category Name"
             name="name"
-            placeholder="Enter City Name"
+            placeholder="e.g. Flexi Desk"
             register={register}
             error={errors.name}
           />
 
           <Input
-            type="file"
-            label="Image"
-            name="image"
+            label="Short Description"
+            name="description"
+            placeholder="e.g. Any open seat, flexible days"
             register={register}
-            error={errors.image}
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-
-              if (file) {
-                setPreview(URL.createObjectURL(file));
-              }
-            }}
+            error={errors.description}
           />
-
-          {preview && (
-            <img
-              src={preview}
-              alt="Category Preview"
-              className="w-40 h-40 rounded-lg object-cover border"
-            />
-          )}
 
           <button
             type="submit"
@@ -143,8 +100,8 @@ export default function AddCategory() {
                 ? "Updating..."
                 : "Saving..."
               : id
-              ? "Update City"
-              : "Save City"}
+              ? "Update Category"
+              : "Save Category"}
           </button>
         </form>
       </div>
