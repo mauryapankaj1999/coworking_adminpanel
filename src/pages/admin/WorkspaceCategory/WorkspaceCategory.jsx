@@ -11,16 +11,16 @@ import { MdDeleteOutline, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import CommonTable from "../../../components/CommonTable";
 import {
-  useCategories,
-  useDeleteCategory,
+  useWorkspaceCategories,
+  useWorkspaceDeleteCategory,
 } from "../../../hooks/useWorkspaceCategory";
 import { showError, showSuccess } from "../../../utils/toast";
 
 export default function WorkspaceCategory() {
   const navigate = useNavigate();
 
-  const { data, isLoading } = useCategories();
-  const { mutate: deleteCategoryMutation } = useDeleteCategory();
+  const { data, isLoading } = useWorkspaceCategories();
+  const { mutate: deleteCategoryMutation } = useWorkspaceDeleteCategory();
 
   const categories = data?.data || [];
 

@@ -13,14 +13,14 @@ import {
   deleteCategory,
 } from "../api/workspaceCategoryApi";
 
-export const useCategories = () => {
+export const useWorkspaceCategories = () => {
   return useQuery({
     queryKey: ["workspace-categories"],
     queryFn: getCategories,
   });
 };
 
-export const useCategory = (id) => {
+export const useWorkspaceCategory = (id) => {
   return useQuery({
     queryKey: ["workspace-category", id],
     queryFn: () => getCategory(id),
@@ -28,7 +28,7 @@ export const useCategory = (id) => {
   });
 };
 
-export const useCategoryBySlug = (slug) => {
+export const useWorkspaceCategoryBySlug = (slug) => {
   return useQuery({
     queryKey: ["workspace-category-slug", slug],
     queryFn: () => getCategoryBySlug(slug),
@@ -36,7 +36,7 @@ export const useCategoryBySlug = (slug) => {
   });
 };
 
-export const useCreateCategory = () => {
+export const useWorkspaceCreateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -49,7 +49,7 @@ export const useCreateCategory = () => {
   });
 };
 
-export const useUpdateCategory = () => {
+export const useWorkspaceUpdateCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -62,7 +62,7 @@ export const useUpdateCategory = () => {
   });
 };
 
-export const useDeleteCategory = () => {
+export const useWorkspaceDeleteCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
