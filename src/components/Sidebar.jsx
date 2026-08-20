@@ -50,6 +50,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       name:"Operator",
       path:"/operator",
       icon: <IoBookOutline size={20} />,
+    },
+    {
+      name:"Enquery",
+      path:"/enquery",
+      icon: <IoBookOutline size={20} />,
     }
   ];
 
@@ -86,10 +91,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-gray-100">
           <div className="flex items-center gap-2">
-            {/* <img src="/stokzy_logo.png" alt="logo" className="w-8" /> */}
-            <h4 className="font-bold text-lg text-[#184981] tracking-tight">
+            <img src="/black_logo.png" alt="logo" className="w-28 h-10 object-contain" />
+            
+            
+            {/* <h4 className="font-bold text-lg text-[#184981] tracking-tight">
               CoWorking
-            </h4>
+            </h4> */}
+
+
+
           </div>
           <button
             className="lg:hidden text-gray-500 hover:text-black transition-colors"
@@ -110,8 +120,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   className={({ isActive }) =>
                     `group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
                       isActive
-                        ? "bg-[#184981]/10 text-[#184981]"
-                        : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                        ? "bg-[#184981]/10 text-[#003F2D] hover:bg-[#184981]/10 hover:text-[#003F2D]"
+                        : "text-gray-600 hover:[#EBF0EF] hover:text-black"
                     }`
                   }
                 >
@@ -127,9 +137,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           </ul>
         </nav>
 
-        {/* Footer (optional) */}
         <div className="px-4 py-3 border-t border-gray-100 text-xs text-gray-400">
-          © {new Date().getFullYear()} CoWorking
+          © {new Date().getFullYear()} Fynd my space
         </div>
       </div>
     </>

@@ -18,6 +18,7 @@ import AddWorkspaceCategory from "../pages/admin/WorkspaceCategory/Add";
 import WorkspaceCategory from "../pages/admin/WorkspaceCategory/WorkspaceCategory";
 import AddOperator from "../pages/admin/Operator/Add";
 import Operator from "../pages/admin/Operator/Operator";
+import Enquery from "../pages/admin/Enquery/Enquery";
 
 const AppRoutes = () => {
   return (
@@ -58,6 +59,7 @@ const AppRoutes = () => {
         <Route path="/operator/add" element={<AddOperator />} />
         <Route path="/operator/edit/:id" element={<AddOperator />} />
         <Route path="/operator" element={<Operator />} />
+        <Route path="/enquery" element={<Enquery />} />
 
        
         
