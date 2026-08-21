@@ -6,7 +6,7 @@ import {
   createBlog,
   updateBlog,
   deleteBlog,
-} from "../api/blogApi";
+} from "../api/blogapi";
 
 // Get all blogs
 export const useBlogs = () => {
